@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Repas de Noël</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Import de la police festive -->
+    <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #000000;
+            --h2-color: #0b3d0b;
+            --bg: #f6f7f9;
+            --card: #ffffff;
+            --text: #333;
+            --li-dark: #222;
+            --btn-day: #0b3d0b;
+            --btn-night: #ffd700;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            color: var(--text);
+            overflow-x: hidden;
+            transition: background 0.5s, color 0.5s;
+            background:
+                radial-gradient(circle at top, rgba(255,255,255,0.25), transparent 40%),
+                linear-gradient(180deg, #7a0c18 0%, #b11226 40%, #1f7a5c 100%);
+        }
+
+        header {
+            padding: 40px 20px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.3rem;
+            color: var(--primary);
+            transition: text-shadow 0.5s, color 0.5s;
+        }
+
+        header.night h1 {
+            color: #ffd700;
+            text-shadow:
+                0 0 5px #ffd700,
+                0 0 10px #ffd700,
+                0 0 20px #ffd700,
+                0 0 40px #ffd700;
+        }
+
+        main {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s forwards;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.5s, color 0.5s;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12), 0 0 15px rgba(255,255,255,0.2);
+        }
+
+        body.night .card:hover {
+            box-shadow: 0 15px 30px rgba(0,0,0,0.25), 0 0 20px #7CFC00, 0 0 40px #7CFC00;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card h2, .card li {
+            font-family: 'Mountains of Christmas', cursive;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: var(--h2-color);
+            font-size: 1.6rem;
+            text-decoration: underline;
+            text-underline-offset: 6px;
+            text-decoration-thickness: 2px;
+            transition: color 0.5s, text-shadow 0.5s;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 1.2rem;
+            color: var(--li-dark);
+            transition: color 0.5s, border-color 0.5s;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        .signature {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            font-size: 13px;
+            color: #222;
+            background: rgba(255,255,255,0.8);
+            padding: 6px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(6px);
+            transition: background 0.5s, color 0.5s;
+        }
+
+        .night-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 12px;
+            background: var(--btn-day);
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: background 0.3s;
+        }
+
+        body.night .night-toggle {
+            background: var(--btn-night);
+            color: #000;
+        }
+
+        body.night {
+            background: #0b0c12;
+            color: #eee;
+        }
+
+        body.night .card {
+            background: #1a1c22;
+            color: #eee;
+        }
+
+        body.night .signature {
+            background: rgba(30,30,40,0.8);
+            color: #ffd700;
+        }
+
+        body.night ul li {
+            border-bottom: 1px solid #333;
+            color: #fff;
+        }
+
+        body.night .card h2 {
+            color: #7CFC00;
+            text-shadow:
+                0 0 5px #7CFC00,
+                0 0 10px #7CFC00,
+                0 0 15px #7CFC00,
+                0 0 20px #7CFC00;
+        }
+
+        /* Bouton musique */
+        #musicBtn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 12px;
+            background: var(--btn-day);
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: background 0.3s;
+        }
+
+        body.night #musicBtn {
+            background: var(--btn-night);
+            color: #000;
+        }
+
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: white;
+            opacity: 0.8;
+            user-select: none;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(100vh); }
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.8rem; }
+            .card h2 { font-size: 1.3rem; }
+            li { font-size: 1rem; }
+        }
+
+    </style>
+</head>
+<body>
+
+<header id="header">
+    <h1>🎄 Repas de Noël 2025 🎄</h1>
+</header>
+
+<button class="night-toggle" id="nightBtn">🌙 Mode Nuit</button>
+<button id="musicBtn">🔊 Musique</button>
+
+<main>
+    <div class="card">
+        <h2>Entrée 🍴</h2>
+        <ul>
+            <li>Foie gras</li>
+            <li>Toasts au saumon</li>
+            <li>Crevettes</li>
+            <li>Feuilletés saucisses</li>
+            <li>Pissaladière</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>Plat 🍗</h2>
+        <ul>
+            <li>Saumon au feu de bois</li>
+            <li>Escargots</li>
+            <li>Côte de Boeuf et Capouns</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>Dessert 🍰</h2>
+        <ul>
+            <li>Bûche de Noël</li>
+            <li>Noix</li>
+            <li>Papillotes</li>
+            <li>Corbeille de fruits</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>Boissons 🥂</h2>
+        <ul>
+            <li>Apérol</li>
+            <li>Champagne</li>
+            <li>Vin rouge & blanc</li>
+            <li>Eau plate & pétillante</li>
+            <li>Café</li>
+        </ul>
+    </div>
+</main>
+
+<div class="signature">OTTO Mathieu</div>
+
+<!-- Musique -->
+<audio id="christmasMusic" loop>
+    <source src="music/all-i-want-for-christmas-is-you-make-my-wish-come-true-edition.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    // Flocons
+    function createSnowflake() {
+        const snowflake = document.createElement("div");
+        snowflake.className = "snowflake";
+        snowflake.textContent = "❄";
+        snowflake.style.left = Math.random() * window.innerWidth + "px";
+        snowflake.style.fontSize = (10 + Math.random() * 16) + "px";
+        snowflake.style.animationDuration = (6 + Math.random() * 6) + "s";
+        document.body.appendChild(snowflake);
+        setTimeout(() => snowflake.remove(), 12000);
+    }
+    setInterval(createSnowflake, 1200);
+
+    // Mode nuit
+    const nightBtn = document.getElementById("nightBtn");
+    const body = document.body;
+    const header = document.getElementById("header");
+
+    nightBtn.addEventListener("click", () => {
+        const isNight = body.classList.toggle("night");
+        header.classList.toggle("night");
+        nightBtn.textContent = isNight ? "☀️ Mode Jour" : "🌙 Mode Nuit";
+    });
+
+    // Musique
+    const music = document.getElementById("christmasMusic");
+    const musicBtn = document.getElementById("musicBtn");
+    const targetVolume = 0.005; // volume léger
+    music.volume = 0;
+
+    function fadeInMusic() {
+        const fade = setInterval(() => {
+            if (music.volume < targetVolume) music.volume += 0.01;
+            else clearInterval(fade);
+        }, 100);
+    }
+
+    document.addEventListener("click", () => {
+        if (music.paused) music.play().then(fadeInMusic).catch(() => {});
+    }, { once: true });
+
+    musicBtn.addEventListener("click", () => {
+        if (music.paused) {
+            music.play();
+            fadeInMusic();
+            musicBtn.textContent = "🔊 Musique";
+        } else {
+            music.pause();
+            musicBtn.textContent = "🔇 Muet";
+        }
+    });
+</script>
+
+</body>
+</html>
