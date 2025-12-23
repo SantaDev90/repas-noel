@@ -222,9 +222,12 @@
 </audio>
 
 <script>
+    // Récupération audio et réglage du volume
     const music = document.getElementById("christmasMusic");
-    music.volume = 0.05;
-    
+    music.volume = 0.05; // volume réduit à 5%
+
+    const musicBtn = document.getElementById("musicBtn");
+
     // ❄️ Flocons de neige
     function createSnowflake() {
         const snowflake = document.createElement("div");
@@ -247,11 +250,7 @@
         nightBtn.textContent = isNight ? "☀️ Mode Jour" : "🌙 Mode Nuit";
     });
 
-    // Musique Noël
-    const music = document.getElementById("christmasMusic");
-    const musicBtn = document.getElementById("musicBtn");
-
-    // Jouer musique après interaction (pour compatibilité navigateur)
+    // Jouer musique après interaction (compatibilité navigateur)
     document.addEventListener("click", () => {
         if (music.paused) music.play().catch(()=>{});
     }, { once: true });
@@ -270,4 +269,3 @@
 
 </body>
 </html>
-
