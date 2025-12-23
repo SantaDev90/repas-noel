@@ -11,7 +11,6 @@
         :root {
             --primary: #000000;
             --h2-color: #0b3d0b;
-            --bg: #f6f7f9;
             --card: #ffffff;
             --text: #333;
             --li-dark: #222;
@@ -31,17 +30,17 @@
         }
 
         header {
-            padding: 70px 20px 20px; /* descendu */
+            padding: 90px 20px 20px; /* espace pour boutons fixes */
             text-align: center;
             position: relative;
         }
 
         header h1 {
             margin: 0;
-            font-size: 1.9rem; /* réduit */
-            white-space: nowrap; /* une seule ligne */
+            font-size: clamp(1.4rem, 5vw, 1.9rem); /* COMME AVANT */
+            white-space: nowrap; /* COMME AVANT */
             color: var(--primary);
-            transition: text-shadow 0.5s, color 0.5s;
+            transition: color 0.5s, text-shadow 0.5s;
         }
 
         header.night h1 {
@@ -51,6 +50,42 @@
                 0 0 10px #ffd700,
                 0 0 20px #ffd700,
                 0 0 40px #ffd700;
+        }
+
+        .night-toggle {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 12px;
+            background: var(--btn-day);
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        #musicBtn {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 12px;
+            background: var(--btn-day);
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        body.night .night-toggle,
+        body.night #musicBtn {
+            background: var(--btn-night);
+            color: #000;
         }
 
         main {
@@ -67,23 +102,6 @@
             border-radius: 16px;
             padding: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeIn 0.8s forwards;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.5s, color 0.5s;
-        }
-
-        .card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.12), 0 0 15px rgba(255,255,255,0.2);
-        }
-
-        body.night .card:hover {
-            box-shadow: 0 15px 30px rgba(0,0,0,0.25), 0 0 20px #7CFC00, 0 0 40px #7CFC00;
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .card h2, .card li {
@@ -96,8 +114,6 @@
             font-size: 1.6rem;
             text-decoration: underline;
             text-underline-offset: 6px;
-            text-decoration-thickness: 2px;
-            transition: color 0.5s, text-shadow 0.5s;
         }
 
         ul {
@@ -111,32 +127,10 @@
             border-bottom: 1px solid #eee;
             font-size: 1.2rem;
             color: var(--li-dark);
-            transition: color 0.5s, border-color 0.5s;
         }
 
         li:last-child {
             border-bottom: none;
-        }
-
-        .night-toggle {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 12px;
-            background: var(--btn-day);
-            color: #fff;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transition: background 0.3s;
-            z-index: 1000;
-        }
-
-        body.night .night-toggle {
-            background: var(--btn-night);
-            color: #000;
         }
 
         body.night {
@@ -146,7 +140,6 @@
 
         body.night .card {
             background: #1a1c22;
-            color: #eee;
         }
 
         body.night ul li {
@@ -156,32 +149,7 @@
 
         body.night .card h2 {
             color: #7CFC00;
-            text-shadow:
-                0 0 5px #7CFC00,
-                0 0 10px #7CFC00,
-                0 0 15px #7CFC00,
-                0 0 20px #7CFC00;
-        }
-
-        #musicBtn {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 12px;
-            background: var(--btn-day);
-            color: #fff;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transition: background 0.3s;
-            z-index: 1000;
-        }
-
-        body.night #musicBtn {
-            background: var(--btn-night);
-            color: #000;
+            text-shadow: 0 0 5px #7CFC00, 0 0 10px #7CFC00;
         }
 
         .snowflake {
@@ -196,23 +164,17 @@
         @keyframes fall {
             to { transform: translateY(100vh); }
         }
-
-        @media (max-width: 600px) {
-            header h1 { font-size: 1.6rem; }
-            .card h2 { font-size: 1.3rem; }
-            li { font-size: 1rem; }
-        }
     </style>
 </head>
 
 <body>
 
+<button id="musicBtn">🔊 Musique</button>
+<button class="night-toggle" id="nightBtn">🌙 Mode Nuit</button>
+
 <header id="header">
     <h1>🎄 Repas de Noël 2025 🎄</h1>
 </header>
-
-<button class="night-toggle" id="nightBtn">🌙 Mode Nuit</button>
-<button id="musicBtn">🔊 Musique</button>
 
 <main>
     <div class="card">
@@ -223,36 +185,6 @@
             <li>Crevettes</li>
             <li>Feuilletés saucisses</li>
             <li>Pissaladière</li>
-        </ul>
-    </div>
-
-    <div class="card">
-        <h2>Plat 🍗</h2>
-        <ul>
-            <li>Saumon au feu de bois</li>
-            <li>Escargots</li>
-            <li>Côte de Boeuf et Capouns</li>
-        </ul>
-    </div>
-
-    <div class="card">
-        <h2>Dessert 🍰</h2>
-        <ul>
-            <li>Bûche de Noël</li>
-            <li>Noix</li>
-            <li>Papillotes</li>
-            <li>Corbeille de fruits</li>
-        </ul>
-    </div>
-
-    <div class="card">
-        <h2>Boissons 🥂</h2>
-        <ul>
-            <li>Apérol</li>
-            <li>Champagne</li>
-            <li>Vin rouge & blanc</li>
-            <li>Eau plate & pétillante</li>
-            <li>Café</li>
         </ul>
     </div>
 </main>
@@ -275,40 +207,22 @@
     setInterval(createSnowflake, 1200);
 
     const nightBtn = document.getElementById("nightBtn");
-    const body = document.body;
     const header = document.getElementById("header");
 
     nightBtn.addEventListener("click", () => {
-        const isNight = body.classList.toggle("night");
+        document.body.classList.toggle("night");
         header.classList.toggle("night");
-        nightBtn.textContent = isNight ? "☀️ Mode Jour" : "🌙 Mode Nuit";
     });
 
     const music = document.getElementById("christmasMusic");
     const musicBtn = document.getElementById("musicBtn");
-    const targetVolume = 0.005;
-    music.volume = 0;
-
-    function fadeInMusic() {
-        const fade = setInterval(() => {
-            if (music.volume < targetVolume) music.volume += 0.01;
-            else clearInterval(fade);
-        }, 100);
-    }
 
     document.addEventListener("click", () => {
-        if (music.paused) music.play().then(fadeInMusic).catch(() => {});
+        if (music.paused) music.play().catch(()=>{});
     }, { once: true });
 
     musicBtn.addEventListener("click", () => {
-        if (music.paused) {
-            music.play();
-            fadeInMusic();
-            musicBtn.textContent = "🔊 Musique";
-        } else {
-            music.pause();
-            musicBtn.textContent = "🔇 Muet";
-        }
+        music.paused ? music.play() : music.pause();
     });
 </script>
 
