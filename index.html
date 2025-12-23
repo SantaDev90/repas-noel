@@ -5,6 +5,7 @@
     <title>Repas de Noël</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Police festive -->
     <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
@@ -30,15 +31,15 @@
         }
 
         header {
-            padding: 90px 20px 20px; /* espace pour boutons fixes */
+            padding: 90px 20px 20px;
             text-align: center;
             position: relative;
         }
 
         header h1 {
             margin: 0;
-            font-size: clamp(1.4rem, 5vw, 1.9rem); /* COMME AVANT */
-            white-space: nowrap; /* COMME AVANT */
+            font-size: clamp(1.4rem, 5vw, 2.3rem);
+            white-space: nowrap;
             color: var(--primary);
             transition: color 0.5s, text-shadow 0.5s;
         }
@@ -52,10 +53,8 @@
                 0 0 40px #ffd700;
         }
 
-        .night-toggle {
+        .night-toggle, #musicBtn {
             position: fixed;
-            top: 10px;
-            right: 10px;
             padding: 10px 15px;
             border: none;
             border-radius: 12px;
@@ -67,20 +66,8 @@
             z-index: 1000;
         }
 
-        #musicBtn {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 12px;
-            background: var(--btn-day);
-            color: #fff;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            z-index: 1000;
-        }
+        .night-toggle { top: 20px; right: 20px; }
+        #musicBtn { top: 20px; left: 20px; }
 
         body.night .night-toggle,
         body.night #musicBtn {
@@ -152,6 +139,7 @@
             text-shadow: 0 0 5px #7CFC00, 0 0 10px #7CFC00;
         }
 
+        /* ❄️ Flocons */
         .snowflake {
             position: fixed;
             top: -10px;
@@ -164,13 +152,22 @@
         @keyframes fall {
             to { transform: translateY(100vh); }
         }
+
+        /* MOBILE */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: clamp(1.4rem, 5vw, 1.8rem);
+            }
+            .card h2 { font-size: 1.3rem; }
+            li { font-size: 1rem; }
+        }
     </style>
 </head>
 
 <body>
 
-<button id="musicBtn">🔊 Musique</button>
 <button class="night-toggle" id="nightBtn">🌙 Mode Nuit</button>
+<button id="musicBtn">🔊 Musique</button>
 
 <header id="header">
     <h1>🎄 Repas de Noël 2025 🎄</h1>
@@ -187,13 +184,45 @@
             <li>Pissaladière</li>
         </ul>
     </div>
+
+    <div class="card">
+        <h2>Plat 🍗</h2>
+        <ul>
+            <li>Saumon au feu de bois</li>
+            <li>Escargots</li>
+            <li>Côte de Boeuf et Capouns</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>Dessert 🍰</h2>
+        <ul>
+            <li>Bûche de Noël</li>
+            <li>Noix</li>
+            <li>Papillotes</li>
+            <li>Corbeille de fruits</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>Boissons 🥂</h2>
+        <ul>
+            <li>Apérol</li>
+            <li>Champagne</li>
+            <li>Vin rouge & blanc</li>
+            <li>Eau plate & pétillante</li>
+            <li>Café</li>
+        </ul>
+    </div>
 </main>
 
+<!-- Audio de Noël -->
 <audio id="christmasMusic" loop>
     <source src="all-i-want-for-christmas-is-you-make-my-wish-come-true-edition.mp3" type="audio/mpeg">
 </audio>
 
 <script>
+    // ❄️ Flocons de neige
     function createSnowflake() {
         const snowflake = document.createElement("div");
         snowflake.className = "snowflake";
@@ -206,23 +235,33 @@
     }
     setInterval(createSnowflake, 1200);
 
+    // Mode nuit/jour
     const nightBtn = document.getElementById("nightBtn");
     const header = document.getElementById("header");
-
     nightBtn.addEventListener("click", () => {
-        document.body.classList.toggle("night");
+        const isNight = document.body.classList.toggle("night");
         header.classList.toggle("night");
+        nightBtn.textContent = isNight ? "☀️ Mode Jour" : "🌙 Mode Nuit";
     });
 
+    // Musique Noël
     const music = document.getElementById("christmasMusic");
     const musicBtn = document.getElementById("musicBtn");
 
+    // Jouer musique après interaction (pour compatibilité navigateur)
     document.addEventListener("click", () => {
         if (music.paused) music.play().catch(()=>{});
     }, { once: true });
 
+    // Bouton musique/muet
     musicBtn.addEventListener("click", () => {
-        music.paused ? music.play() : music.pause();
+        if (music.paused) {
+            music.play();
+            musicBtn.textContent = "🔇 Muet";
+        } else {
+            music.pause();
+            musicBtn.textContent = "🔊 Musique";
+        }
     });
 </script>
 
