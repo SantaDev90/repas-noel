@@ -5,7 +5,6 @@
     <title>Repas de Noël</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Import de la police festive -->
     <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
@@ -118,23 +117,10 @@
             border-bottom: none;
         }
 
-        .signature {
-            position: fixed;
-            bottom: 15px;
-            right: 15px;
-            font-size: 13px;
-            color: #222;
-            background: rgba(255,255,255,0.8);
-            padding: 6px 12px;
-            border-radius: 20px;
-            backdrop-filter: blur(6px);
-            transition: background 0.5s, color 0.5s;
-        }
-
         .night-toggle {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 10px;
+            right: 10px;
             padding: 10px 15px;
             border: none;
             border-radius: 12px;
@@ -144,6 +130,7 @@
             cursor: pointer;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             transition: background 0.3s;
+            z-index: 1000;
         }
 
         body.night .night-toggle {
@@ -161,11 +148,6 @@
             color: #eee;
         }
 
-        body.night .signature {
-            background: rgba(30,30,40,0.8);
-            color: #ffd700;
-        }
-
         body.night ul li {
             border-bottom: 1px solid #333;
             color: #fff;
@@ -180,11 +162,10 @@
                 0 0 20px #7CFC00;
         }
 
-        /* Bouton musique */
         #musicBtn {
             position: fixed;
-            top: 20px;
-            left: 20px;
+            top: 10px;
+            left: 10px;
             padding: 10px 15px;
             border: none;
             border-radius: 12px;
@@ -194,6 +175,7 @@
             cursor: pointer;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             transition: background 0.3s;
+            z-index: 1000;
         }
 
         body.night #musicBtn {
@@ -219,9 +201,9 @@
             .card h2 { font-size: 1.3rem; }
             li { font-size: 1rem; }
         }
-
     </style>
 </head>
+
 <body>
 
 <header id="header">
@@ -274,15 +256,11 @@
     </div>
 </main>
 
-<div class="signature">OTTO Mathieu</div>
-
-<!-- Musique -->
 <audio id="christmasMusic" loop>
     <source src="all-i-want-for-christmas-is-you-make-my-wish-come-true-edition.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-    // Flocons
     function createSnowflake() {
         const snowflake = document.createElement("div");
         snowflake.className = "snowflake";
@@ -295,7 +273,6 @@
     }
     setInterval(createSnowflake, 1200);
 
-    // Mode nuit
     const nightBtn = document.getElementById("nightBtn");
     const body = document.body;
     const header = document.getElementById("header");
@@ -306,10 +283,9 @@
         nightBtn.textContent = isNight ? "☀️ Mode Jour" : "🌙 Mode Nuit";
     });
 
-    // Musique
     const music = document.getElementById("christmasMusic");
     const musicBtn = document.getElementById("musicBtn");
-    const targetVolume = 0.005; // volume léger
+    const targetVolume = 0.005;
     music.volume = 0;
 
     function fadeInMusic() {
@@ -337,4 +313,3 @@
 
 </body>
 </html>
-
